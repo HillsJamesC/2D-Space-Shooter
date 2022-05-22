@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 5.0f;
+    [SerializeField] private float _speed = 5.0f; 
     private float _speedMultiplier = 2;
-    [SerializeField]
-    private GameObject _laserPrefab;
-    [SerializeField]
-    private GameObject _tripleShotPrefab;
-    [SerializeField]
-    private float _fireRate = 0.25f;
+    [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private GameObject _tripleShotPrefab;
+    [SerializeField] private float _fireRate = 0.25f;
     private float _canFire = -1f;
-    [SerializeField]
-    private int _lives = 3;
-    private SpawnManager _spawnManager;    
-    private bool _isTripleShotActive = false;    
+    [SerializeField] private int _lives = 3;
+    private SpawnManager _spawnManager;
+    private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isShieldsActive = false;
-    [SerializeField]
-    private GameObject _shieldVisualizer;
+    [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private int _score;
+    private UIManager _uiManager;
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +25,16 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
+        }
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is NULL.");
         }
     }
     
@@ -119,5 +122,10 @@ public class Player : MonoBehaviour
     {
         _isShieldsActive = true;
         _shieldVisualizer.SetActive(true);
+    }
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScore(_score);
     }
 }
