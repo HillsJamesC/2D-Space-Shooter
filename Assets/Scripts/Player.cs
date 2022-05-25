@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldsActive = false;
     [SerializeField] private GameObject _shieldVisualizer;
+
+    [SerializeField] private GameObject _leftEngine;
+    [SerializeField] private GameObject _rightEngine;
+
     [SerializeField] private int _score;
     private UIManager _uiManager;
 
@@ -84,6 +88,15 @@ public class Player : MonoBehaviour
             return;
         }
         _lives --;
+
+        if (_lives == 2)
+        {
+            _leftEngine.SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            _rightEngine.SetActive(true);
+        }
 
         _uiManager.UpdateLives(_lives);
 
