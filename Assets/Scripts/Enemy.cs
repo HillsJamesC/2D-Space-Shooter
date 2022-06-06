@@ -9,11 +9,13 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _anim;
     private Collider2D _enemyCollider;
+    private AudioSource _audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_player == null)
         {
@@ -64,7 +66,8 @@ public class Enemy : MonoBehaviour
             }
 
             _enemyCollider.enabled = false;
-            _anim.SetTrigger("OnEnemyDeath");            
+            _anim.SetTrigger("OnEnemyDeath");
+            _audioSource.Play();
             Destroy(this.gameObject, 2.8f);
         }
         
@@ -78,6 +81,7 @@ public class Enemy : MonoBehaviour
 
             _enemyCollider.enabled = false;
             _anim.SetTrigger("OnEnemyDeath");
+            _audioSource.Play();
             Destroy(this.gameObject, 2.8f);
         }
     }
