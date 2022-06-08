@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
         
         transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.8f, 2f), 0);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
     }
 
     void FireLaser()
