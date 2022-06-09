@@ -10,7 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _livesImg;
     [SerializeField] private Text _gameOverText;
     [SerializeField] private Text _restartText;
-
+    [SerializeField] private Sprite[] _shieldStrengthSprites;
+    [SerializeField] private Image _shieldsImg;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
@@ -39,6 +40,11 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateShieldStrength(int currentShieldStrength)
+    {
+        _shieldsImg.sprite = _shieldStrengthSprites[currentShieldStrength];
     }
 
     IEnumerator GameOverFlickerRoutine()

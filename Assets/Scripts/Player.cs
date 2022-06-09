@@ -13,18 +13,15 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
     private bool _isTripleShotActive = false;
-    private bool _isSpeedBoostActive = false;
-    private bool _isShieldsActive = false;
-    [SerializeField] private GameObject _shieldVisualizer;
-
+    private bool _isSpeedBoostActive = false;    
+    [SerializeField] private GameObject _shieldVisualizer;   
     [SerializeField] private GameObject _leftEngine;
     [SerializeField] private GameObject _rightEngine;
-
     [SerializeField] private int _score;
     private UIManager _uiManager;
-
     [SerializeField] private AudioClip _laserSoundClip;
     private AudioSource _audioSource;
+    [SerializeField] private int _shieldStrength = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -102,12 +99,20 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        if (_isShieldsActive == true)
+        if (_shieldStrength > 1)
         {
-            _isShieldsActive = false;
-            _shieldVisualizer.SetActive(false); 
+            _shieldStrength--;
+            _uiManager.UpdateShieldStrength(_shieldStrength);
             return;
         }
+        else if (_shieldStrength == 1)
+        {
+            _shieldStrength--;
+            _shieldVisualizer.SetActive(false);                        
+            _uiManager.UpdateShieldStrength(_shieldStrength);
+            return;
+        }     
+
         _lives --;
 
         if (_lives == 2)
@@ -117,7 +122,7 @@ public class Player : MonoBehaviour
         else if (_lives == 1)
         {
             _rightEngine.SetActive(true);
-        }
+        }        
 
         _uiManager.UpdateLives(_lives);
 
@@ -154,7 +159,8 @@ public class Player : MonoBehaviour
 
     public void ShieldsActive()
     {
-        _isShieldsActive = true;
+        _shieldStrength = 3;
+        _uiManager.UpdateShieldStrength(_shieldStrength);        
         _shieldVisualizer.SetActive(true);
     }
     public void AddScore(int points)
