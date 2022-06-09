@@ -66,8 +66,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        if (transform.position.y < -4.92f)
+        else if (transform.position.y < -4.92f)
         {
             float randomX = Random.Range(-9f, 9f);
             transform.position = new Vector3(randomX, 7.12f, 0);
@@ -75,16 +74,10 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {       
+    {
         if (other.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
-
-            if (player != null)
-            {
-                player.Damage();
-            }
-
+            _player.Damage();
             _enemyCollider.enabled = false;
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();

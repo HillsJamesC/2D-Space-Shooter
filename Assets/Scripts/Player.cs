@@ -72,7 +72,14 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         
-        transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
+        if (_isSpeedBoostActive == true)
+        {
+            transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
     }
@@ -136,7 +143,7 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
-        _speed *= _speedMultiplier;
+       // _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
@@ -144,7 +151,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(10.0f);
         _isSpeedBoostActive = false;
-        _speed /= _speedMultiplier;
+        // _speed /= _speedMultiplier;
     }
 
     public void ShieldsActive()
