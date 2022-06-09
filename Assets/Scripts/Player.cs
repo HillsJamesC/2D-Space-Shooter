@@ -82,6 +82,15 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            _speed = 10.0f;
+        }
+        else
+        {
+            _speed = 5.0f;
+        }
     }
 
     void FireLaser()
@@ -142,16 +151,14 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _isSpeedBoostActive = true;
-       // _speed *= _speedMultiplier;
+        _isSpeedBoostActive = true;       
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(10.0f);
-        _isSpeedBoostActive = false;
-        // _speed /= _speedMultiplier;
+        _isSpeedBoostActive = false;        
     }
 
     public void ShieldsActive()
