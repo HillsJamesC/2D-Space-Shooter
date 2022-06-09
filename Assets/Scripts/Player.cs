@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5.0f; 
+    [SerializeField] private float _speed = 5.0f;
     private float _speedMultiplier = 2;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
@@ -71,8 +71,8 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        
-        if (_isSpeedBoostActive == true)
+
+        if (_isSpeedBoostActive == true || Input.GetKey(KeyCode.LeftShift))
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
         }
@@ -82,16 +82,7 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            _speed = 10.0f;
-        }
-        else
-        {
-            _speed = 5.0f;
-        }
-    }
+    }      
 
     void FireLaser()
     {
