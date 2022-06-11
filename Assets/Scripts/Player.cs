@@ -20,8 +20,10 @@ public class Player : MonoBehaviour
     [SerializeField] private int _score;
     private UIManager _uiManager;
     [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private AudioClip _ammoEmptyClip;
     private AudioSource _audioSource;
     [SerializeField] private int _shieldStrength = 0;
+    [SerializeField] private int _ammoCount = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
         if (_audioSource == null)
         {
             Debug.LogError("The AudioSource on the PLayer is NULL.");
-        }
+        }        
         else
         {
             _audioSource.clip = _laserSoundClip;
@@ -84,6 +86,17 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
+
+        if (_ammoCount > 0)
+        {
+            _ammoCount--;
+        }
+        else
+        {
+            _audioSource.clip = _ammoEmptyClip;
+            _audioSource.Play();
+            return;
+        }
 
         if (_isTripleShotActive == true)
         {

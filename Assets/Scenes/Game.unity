@@ -469,7 +469,9 @@ MonoBehaviour:
   _rightEngine: {fileID: 2101414723}
   _score: 0
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _ammoEmptyClip: {fileID: 8300000, guid: 76fb64a80e3c2b04d9c70605bcb7c619, type: 3}
   _shieldStrength: 0
+  _ammoCount: 15
 --- !u!212 &363242215
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -576,7 +578,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
