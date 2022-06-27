@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Laser
+  - Bomb
+  - Bomb_Explosion
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,8 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.0f;
 
-    [SerializeField] private int powerupID; // 0 = Triple Shot, 1 = Speed, 2 = Shields, 3 = Ammo
+    // 0 = Triple Shot, 1 = Speed, 2 = Shields, 3 = Ammo, 4 = Health, 5 = Missles
+    [SerializeField] private int powerupID;
 
     [SerializeField] private AudioClip _clip;
 
@@ -25,7 +26,7 @@ public class Powerup : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
+            Player player = other.transform.GetComponent<Player>();            
 
             AudioSource.PlayClipAtPoint(_clip, transform.position);
 
@@ -47,6 +48,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 4:
                         player.HealthCollected();
+                        break;
+                    case 5:
+                        player.BombsCollected();
                         break;
                     default:
                         Debug.Log("Default Value");

@@ -460,18 +460,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _laserPrefab: {fileID: 5617749119487610873, guid: f5a0e5cbfe1cea44ea36b0592dce2cc7, type: 3}
-  _tripleShotPrefab: {fileID: 6471948592363117574, guid: 9887f4d3136995a44b6e1d82889d1706, type: 3}
   _fireRate: 0.25
   _lives: 3
+  _score: 0
+  _shieldStrength: 0
+  _ammoCount: 15
+  _laserPrefab: {fileID: 5617749119487610873, guid: f5a0e5cbfe1cea44ea36b0592dce2cc7, type: 3}
+  _tripleShotPrefab: {fileID: 6471948592363117574, guid: 9887f4d3136995a44b6e1d82889d1706, type: 3}
   _shieldVisualizer: {fileID: 1088616907}
   _leftEngine: {fileID: 34074483}
   _rightEngine: {fileID: 2101414723}
-  _score: 0
+  _bombPrefab: {fileID: 4704695612205395090, guid: e2b09d6e62540e140aba9ebb974132c1, type: 3}
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _ammoEmptyClip: {fileID: 8300000, guid: 76fb64a80e3c2b04d9c70605bcb7c619, type: 3}
-  _shieldStrength: 0
-  _ammoCount: 15
+  _bombBeepClip: {fileID: 8300000, guid: 4badd84655f111940ab28e3b5f6ab1a9, type: 3}
 --- !u!212 &363242215
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1080,6 +1082,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 928963473, guid: d8d878227ee146f49a05b36a4d05266b, type: 3}
+      propertyPath: m_Radius
+      value: 1.3000065
+      objectReference: {fileID: 0}
+    - target: {fileID: 928963473, guid: d8d878227ee146f49a05b36a4d05266b, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0071651936
+      objectReference: {fileID: 0}
+    - target: {fileID: 928963473, guid: d8d878227ee146f49a05b36a4d05266b, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.04839337
+      objectReference: {fileID: 0}
     - target: {fileID: 1978349168349988390, guid: d8d878227ee146f49a05b36a4d05266b, type: 3}
       propertyPath: m_Name
       value: Asteroid
@@ -1536,6 +1550,8 @@ MonoBehaviour:
   - {fileID: 2707858523891958122, guid: beda38c56d49f554a9ccb15c03ba5477, type: 3}
   - {fileID: 6322212268235460216, guid: a294fe3358fda094d96f92757ce69770, type: 3}
   - {fileID: 7446876707610961472, guid: 3e34dc85b9c65a0488dc76600260a12a, type: 3}
+  _rarePowerups:
+  - {fileID: 2422178749574654278, guid: b6491a725d8f7f6458776dc05d1e8efe, type: 3}
 --- !u!4 &1517971121
 Transform:
   m_ObjectHideFlags: 0

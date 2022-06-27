@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 4
   _laserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
+  _bombExplosionPrefab: {fileID: 6639658696185872379, guid: 030f7cf71635c3b47a6ef9c7f32edfa0, type: 3}
 --- !u!50 &6147080804681476569
 Rigidbody2D:
   serializedVersion: 4

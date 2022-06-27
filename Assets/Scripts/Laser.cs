@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
-{    
+{
     [SerializeField]
     private float _speed = 8.0f;
     private bool _isEnemyLaser = false;
 
     // Update is called once per frame
-    void Update()    
-    {
+    void Update()
+    {   
+        
         if (_isEnemyLaser == false)
         {
             MoveUp();
@@ -19,7 +20,7 @@ public class Laser : MonoBehaviour
         {
             MoveDown();
         }
-    }
+    }    
 
     void MoveUp()
     {
@@ -65,5 +66,5 @@ public class Laser : MonoBehaviour
                 player.Damage();
             }
         }
-    }
+    }   
 }

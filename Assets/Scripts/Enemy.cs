@@ -12,12 +12,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     private float _fireRate = 3.0f;
     private float _canFire = -1;
-
-    // Start is called before the first frame update
+    [SerializeField] private GameObject _bombExplosionPrefab;
+    
     void Start()
-    {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+    {   _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
+        _enemyCollider = GetComponent<Collider2D>();
 
         if (_player == null)
         {
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            
+
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
@@ -78,12 +78,9 @@ public class Enemy : MonoBehaviour
         if (other.tag == "Player")
         {
             _player.Damage();
-            _enemyCollider.enabled = false;
-            _anim.SetTrigger("OnEnemyDeath");
-            _audioSource.Play();
-            Destroy(this.gameObject, 2.8f);
+            EnemyDestroyed();
         }
-        
+
         if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
@@ -91,7 +88,31 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
+            EnemyDestroyed();
+        }
 
+        if (other.tag == "Bomb")
+        {
+            if (_player != null)
+            {
+                _player.AddScore(25);
+                Destroy(other.gameObject);
+                Instantiate(_bombExplosionPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+            }
+        }
+
+        if (other.tag == "Bomb_Explosion")
+        {
+            if (_player != null)
+            {
+                _player.AddScore(20);
+                EnemyDestroyed();
+            }
+
+        }
+
+        void EnemyDestroyed()
+        {
             _enemyCollider.enabled = false;
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
@@ -99,3 +120,4 @@ public class Enemy : MonoBehaviour
         }
     }
 }
+
