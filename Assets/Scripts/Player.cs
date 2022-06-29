@@ -23,10 +23,10 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     private AudioSource _audioSource;
     private bool _isTripleShotActive = false;
-    private bool _isSpeedBoostActive = false;
     private bool _isBombsActive = false;
-    private float _speedMultiplier = 2f;
+    private float _speedMultiplier = 2.25f;
     private float _canFire = -1f;
+    private float _thrusterLevel = 1f;
     
     void Start()
     {        
@@ -72,17 +72,50 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        if (_isSpeedBoostActive == true || Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && (_thrusterLevel < 49))
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
+            ThrustCounter();
         }
         else
         {
             transform.Translate(direction * _speed * Time.deltaTime);
+            if (!Input.GetKey(KeyCode.LeftShift))
+            ThrusterRefill();
         }
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
-    }      
+    }  
+    
+    void ThrustCounter()
+    {
+        if (_thrusterLevel > 0f && _thrusterLevel < 49f)
+        {
+            StartCoroutine(ThrusterCounterCoroutine());
+            _uiManager.UpdateThrusterLevel(_thrusterLevel);
+            _thrusterLevel += .025f;
+        }
+    }
+
+    IEnumerator ThrusterCounterCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+    }
+
+    void ThrusterRefill()
+    {
+        if (_thrusterLevel > 1)
+        {
+            StartCoroutine(ThrusterRefillCoroutine());
+            _uiManager.UpdateThrusterLevel(_thrusterLevel);
+            _thrusterLevel -= .006f;
+        }
+    }
+
+    IEnumerator ThrusterRefillCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+    }
 
     void FireLaser()
     {
@@ -178,17 +211,10 @@ public class Player : MonoBehaviour
         _isTripleShotActive = false;
     }
 
-    public void SpeedBoostActive()
+    public void SpeedBoostCollected()
     {
-        _isBombsActive = false;
-        _isSpeedBoostActive = true;       
-        StartCoroutine(SpeedBoostPowerDownRoutine());
-    }
-
-    IEnumerator SpeedBoostPowerDownRoutine()
-    {
-        yield return new WaitForSeconds(10.0f);
-        _isSpeedBoostActive = false;
+        _thrusterLevel = 1;
+        _uiManager.UpdateThrusterLevel(_thrusterLevel);
     }
 
     public void ShieldsActive()

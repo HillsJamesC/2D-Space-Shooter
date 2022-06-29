@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _restartText;
     [SerializeField] private Sprite[] _shieldStrengthSprites;
     [SerializeField] private Image _shieldsImg;
+    [SerializeField] private Sprite[] _thrusterSprites;
+    [SerializeField] private Image _thrusterImg;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
@@ -40,6 +42,11 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateThrusterLevel(float currentThrusterLevel)
+    {
+        _thrusterImg.sprite = _thrusterSprites[(int)currentThrusterLevel];
     }
 
     public void UpdateShieldStrength(int currentShieldStrength)
