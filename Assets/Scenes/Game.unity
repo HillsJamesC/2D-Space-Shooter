@@ -2166,7 +2166,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 747e8f9649777db428b04afdd9bbdd3e, type: 3}
   _shieldsImg: {fileID: 1429922725}
   _thrusterSprites:
-  - {fileID: 21300000, guid: 113dc9d8d7b89cf498c9b3005dc09277, type: 3}
   - {fileID: 21300000, guid: 8e1e56d6960a6c641891701d00980ab3, type: 3}
   - {fileID: 21300000, guid: e4e5bf36d6842fc4c8698ab3618d68c4, type: 3}
   - {fileID: 21300000, guid: 53622d24919d46a4c90ef9815fd64e87, type: 3}
@@ -2216,6 +2215,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 52672d5068c75b54e969cda9c2a75a76, type: 3}
   - {fileID: 21300000, guid: 731e66ecc56c8dd41a99e44c9b288a77, type: 3}
   - {fileID: 21300000, guid: 5ef27554edd7c9d419c806191265259a, type: 3}
+  - {fileID: 21300000, guid: 113dc9d8d7b89cf498c9b3005dc09277, type: 3}
   _thrusterImg: {fileID: 1177537644}
 --- !u!114 &2125394154
 MonoBehaviour:

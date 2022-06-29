@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        if (Input.GetKey(KeyCode.LeftShift) && (_thrusterLevel < 49))
+        if (Input.GetKey(KeyCode.LeftShift) && (_thrusterLevel < 49f))
         {
             transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
             ThrustCounter();
@@ -94,6 +94,11 @@ public class Player : MonoBehaviour
             StartCoroutine(ThrusterCounterCoroutine());
             _uiManager.UpdateThrusterLevel(_thrusterLevel);
             _thrusterLevel += .025f;
+        }
+
+        if (_thrusterLevel == 49f)
+        {
+            _thrusterLevel = 0f;
         }
     }
 
