@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _ammoEmptyClip;
     [SerializeField] private AudioClip _bombBeepClip;
+    [SerializeField] public CameraShake _cameraShake;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private AudioSource _audioSource;
@@ -138,6 +139,8 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
+        StartCoroutine(_cameraShake.Shake(.15f, .4f));
+
         if (_shieldStrength > 1)
         {
             _shieldStrength--;
