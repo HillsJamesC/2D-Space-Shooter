@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateThrusterLevel(float currentThrusterLevel)
     {
-        _thrusterImg.sprite = _thrusterSprites[(int)currentThrusterLevel];
+        _thrusterImg.sprite = _thrusterSprites[(int) currentThrusterLevel];
     }
 
     public void UpdateShieldStrength(int currentShieldStrength)
