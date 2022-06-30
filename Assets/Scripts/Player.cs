@@ -88,11 +88,6 @@ public class Player : MonoBehaviour
             _uiManager.UpdateThrusterLevel(_thrusterLevel);
             _thrusterLevel += .025f;
         }
-
-        if (_thrusterLevel == 50f)
-        {
-            _thrusterLevel = 0f;
-        }
     }
 
     void ThrusterRefill()
