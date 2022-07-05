@@ -14,11 +14,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _shieldsImg;
     [SerializeField] private Sprite[] _thrusterSprites;
     [SerializeField] private Image _thrusterImg;
+    [SerializeField] private Text _ammoText;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
+        _ammoText.text = "Ammo: " + 0 + " / 75";
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -27,6 +29,11 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogError("GameManager is NULL.");
         }
+    }
+
+    public void UpdateAmmo(int playerAmmo)
+    {
+        _ammoText.text = "Ammo: " + playerAmmo.ToString() + " / 75";
     }
 
     public void UpdateScore(int playerScore)

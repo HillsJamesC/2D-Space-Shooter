@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _score;
     [SerializeField] private int _shieldStrength = 0;
     [SerializeField] private int _ammoCount = 25;
+    [SerializeField] private int _maxAmmo = 75;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
@@ -117,6 +118,7 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
             _ammoCount--;
+            _uiManager.UpdateAmmo(_ammoCount);
         }
         if (_isTripleShotActive == true)
         {
@@ -206,7 +208,13 @@ public class Player : MonoBehaviour
     }
     public void AmmoCollected()
     {
-        _ammoCount = 25;
+        _ammoCount += 25;
+
+        if (_ammoCount > _maxAmmo)
+        {
+            _ammoCount = _maxAmmo;
+        }
+        _uiManager.UpdateAmmo(_ammoCount);
     }
     public void BombsCollected()
     {
