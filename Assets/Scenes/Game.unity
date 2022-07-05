@@ -474,7 +474,7 @@ MonoBehaviour:
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _ammoEmptyClip: {fileID: 8300000, guid: 76fb64a80e3c2b04d9c70605bcb7c619, type: 3}
   _bombBeepClip: {fileID: 8300000, guid: 4badd84655f111940ab28e3b5f6ab1a9, type: 3}
-  _cameraShake: {fileID: 1511876412}
+  cameraShake: {fileID: 1511876412}
 --- !u!212 &363242215
 SpriteRenderer:
   m_ObjectHideFlags: 0

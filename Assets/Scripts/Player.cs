@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _ammoEmptyClip;
     [SerializeField] private AudioClip _bombBeepClip;
-    [SerializeField] public CameraShake _cameraShake;
+    [SerializeField] public CameraShake cameraShake;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private AudioSource _audioSource;
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
     void ThrusterRefill()
     {
-        if (_thrusterLevel > 1)
+        if (_thrusterLevel > 1f)
         {
             _uiManager.UpdateThrusterLevel(_thrusterLevel);
             _thrusterLevel -= .006f;
@@ -134,7 +134,10 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
-        StartCoroutine(_cameraShake.Shake(.15f, .4f));
+        if (_lives > 1)
+        {
+        StartCoroutine(cameraShake.Shake(.15f, .4f));
+        }
 
         if (_shieldStrength > 1)
         {

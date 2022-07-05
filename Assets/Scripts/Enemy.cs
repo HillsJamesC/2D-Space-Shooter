@@ -13,11 +13,13 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3.0f;
     private float _canFire = -1;
     [SerializeField] private GameObject _bombExplosionPrefab;
+    private int _randomMovement; //0 = Down, 1 = Wave
     
     void Start()
     {   _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _enemyCollider = GetComponent<Collider2D>();
+        _randomMovement = Random.Range(0, 2);
 
         if (_player == null)
         {
@@ -60,7 +62,19 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovement()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        // Using Switch statement to later add more movements
+        switch (_randomMovement) 
+        {
+            case 1:
+                transform.Translate(new Vector3(Mathf.Cos(Time.time * 4) * 2, -1, 0) * _speed * Time.deltaTime);
+                break;
+            //case 2:
+            //case 3:
+            default:
+                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                break;
+        }
+        
 
         if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
         {
