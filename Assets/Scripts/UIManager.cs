@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _ammoText.text = "Ammo: " + 0 + " / 75";
+        _ammoText.text = "Ammo: " + 25 + " / 75";
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
