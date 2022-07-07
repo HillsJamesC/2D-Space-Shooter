@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite[] _thrusterSprites;
     [SerializeField] private Image _thrusterImg;
     [SerializeField] private Text _ammoText;
+    [SerializeField] public Text _announceWave;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
@@ -24,11 +25,17 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _announceWave.gameObject.SetActive(false);
 
         if (_gameManager == null)
         {
             Debug.LogError("GameManager is NULL.");
         }
+    }
+
+    public void UpdateWave(int nextwave)
+    {        
+        _announceWave.text = "Wave: " + nextwave.ToString();
     }
 
     public void UpdateAmmo(int playerAmmo)

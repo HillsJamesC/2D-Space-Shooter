@@ -14,12 +14,14 @@ public class Enemy : MonoBehaviour
     private float _canFire = -1;
     [SerializeField] private GameObject _bombExplosionPrefab;
     private int _randomMovement; //0 = Down, 1 = Wave
+    private SpawnManager _spawnManager;
     
     void Start()
     {   _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _enemyCollider = GetComponent<Collider2D>();
         _randomMovement = Random.Range(0, 2);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
         if (_player == null)
         {
@@ -130,6 +132,7 @@ public class Enemy : MonoBehaviour
             _enemyCollider.enabled = false;
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
+            _spawnManager.enemiesKilled++;
             Destroy(this.gameObject, 2.8f);
         }
     }
