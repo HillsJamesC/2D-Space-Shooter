@@ -50,7 +50,7 @@ public class Powerup : MonoBehaviour
                         player.HealthCollected();
                         break;
                     case 5:
-                        player.BombsCollected();
+                        player.SlowSpeedActive();
                         break;
                     default:
                         Debug.Log("Default Value");

@@ -154,7 +154,9 @@ public class Player : MonoBehaviour
             _uiManager.UpdateShieldStrength(_shieldStrength);
             return;
         }
+
         _lives--;
+
         if (_lives == 2)
         {
             _leftEngine.SetActive(true);
@@ -163,13 +165,16 @@ public class Player : MonoBehaviour
         {
             _rightEngine.SetActive(true);
         }
+
         _uiManager.UpdateLives(_lives);
+
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
     }
+
     public void HealthCollected()
     {
         if (_lives == 1)
@@ -182,30 +187,50 @@ public class Player : MonoBehaviour
             _lives++;
             _leftEngine.SetActive(false);
         }
+
         _uiManager.UpdateLives(_lives);
     }
+
     public void TripleShotActive()
     {
         _isBombsActive = false;
         _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(10.0f);
         _isTripleShotActive = false;
     }
+
     public void SpeedBoostCollected()
     {
         _thrusterLevel = 1;
         _uiManager.UpdateThrusterLevel(_thrusterLevel);
     }
+
+    public void SlowSpeedActive()
+    {
+        _thrusterLevel = 0;
+        _uiManager.UpdateThrusterLevel(_thrusterLevel);
+        _speed = 2.5f;
+        StartCoroutine(SlowSpeedPowerDown());
+    }
+
+    IEnumerator SlowSpeedPowerDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _speed = 5.0f;
+    }
+
     public void ShieldsActive()
     {
         _shieldStrength = 3;
         _uiManager.UpdateShieldStrength(_shieldStrength);
         _shieldVisualizer.SetActive(true);
     }
+
     public void AmmoCollected()
     {
         _ammoCount += 25;
@@ -216,17 +241,20 @@ public class Player : MonoBehaviour
         }
         _uiManager.UpdateAmmo(_ammoCount);
     }
+
     public void BombsCollected()
     {
         _isTripleShotActive = false;
         _isBombsActive = true;
         StartCoroutine(BombPowerDown());
     }
+
     IEnumerator BombPowerDown()
     {
         yield return new WaitForSeconds(5.0f);
         _isBombsActive = false;
     }
+
     public void AddScore(int points)
     {
         _score += points;
