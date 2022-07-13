@@ -41,6 +41,11 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("The Collider2D is NULL.");
         }
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("The SpawnManager is Null.");
+        }
     }
 
     // Update is called once per frame
@@ -91,40 +96,31 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
-        {
+        if (other.tag == "Player" && _player != null)
+        { 
+            
             _player.Damage();
             EnemyDestroyed();
         }
 
-        if (other.tag == "Laser")
+        if (other.tag == "Laser" && _player != null)
         {
-            Destroy(other.gameObject);
-            if (_player != null)
-            {
-                _player.AddScore(10);
-            }
+            Destroy(other.gameObject);            
+            _player.AddScore(10);            
             EnemyDestroyed();
         }
 
-        if (other.tag == "Bomb")
+        if (other.tag == "Bomb" && _player != null)
         {
-            if (_player != null)
-            {
-                _player.AddScore(25);
-                Destroy(other.gameObject);
-                Instantiate(_bombExplosionPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
-            }
+            _player.AddScore(25);
+            Destroy(other.gameObject);
+            Instantiate(_bombExplosionPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
         }
 
-        if (other.tag == "Bomb_Explosion")
+        if (other.tag == "Bomb_Explosion" && _player != null)
         {
-            if (_player != null)
-            {
-                _player.AddScore(20);
-                EnemyDestroyed();
-            }
-
+            _player.AddScore(20);
+            EnemyDestroyed();
         }
 
         void EnemyDestroyed()

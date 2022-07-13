@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateWave(int nextwave)
-    {        
+    {
         _announceWave.text = "Wave: " + nextwave.ToString();
     }
 
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + playerScore.ToString();
     }
 
-    public void UpdateLives (int currentLives)
+    public void UpdateLives(int currentLives)
     {
         _livesImg.sprite = _liveSprites[currentLives];
 
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateThrusterLevel(float currentThrusterLevel)
     {
-        _thrusterImg.sprite = _thrusterSprites[(int) currentThrusterLevel];
+        _thrusterImg.sprite = _thrusterSprites[(int)currentThrusterLevel];
     }
 
     public void UpdateShieldStrength(int currentShieldStrength)

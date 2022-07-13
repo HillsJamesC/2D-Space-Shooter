@@ -28,6 +28,7 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError("The Player is NULL");
         }
+
         if (_uiManager == null)
         {
             Debug.LogError("The UI Manager is NULL.");
@@ -35,6 +36,11 @@ public class SpawnManager : MonoBehaviour
     }
 
     private void Update()
+    {
+        Wave();
+    }
+
+    private void Wave()
     {
         if (enemiesKilled >= _enemiesToSpawn)
         {
