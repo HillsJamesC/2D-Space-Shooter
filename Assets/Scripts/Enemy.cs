@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     
     void Start()
     {   _player = GameObject.Find("Player").GetComponent<Player>();
+        _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _enemyCollider = GetComponent<Collider2D>();
         _randomMovement = Random.Range(0, 2);
@@ -27,15 +28,16 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("The Player is NULL.");
         }
-
-        _anim = GetComponent<Animator>();
-
+        
         if (_anim == null)
         {
             Debug.LogError("The Animator is NULL.");
         }
 
-        _enemyCollider = GetComponent<Collider2D>();
+        if (_audioSource == null)
+        {
+            Debug.LogError("The Audio Source is NULL.");
+        }
 
         if (_enemyCollider == null)
         {
@@ -96,33 +98,34 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && _player != null)
-        { 
-            
-            _player.Damage();
-            EnemyDestroyed();
-        }
-
-        if (other.tag == "Laser" && _player != null)
+        if (_player != null)
         {
-            Destroy(other.gameObject);            
-            _player.AddScore(10);            
-            EnemyDestroyed();
-        }
+            if (other.tag == "Player")
+            {
+                _player.Damage();
+                EnemyDestroyed();
+            }
 
-        if (other.tag == "Bomb" && _player != null)
-        {
-            _player.AddScore(25);
-            Destroy(other.gameObject);
-            Instantiate(_bombExplosionPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
-        }
+            if (other.tag == "Laser")
+            {
+                Destroy(other.gameObject);
+                _player.AddScore(10);
+                EnemyDestroyed();
+            }
 
-        if (other.tag == "Bomb_Explosion" && _player != null)
-        {
-            _player.AddScore(20);
-            EnemyDestroyed();
-        }
+            if (other.tag == "Bomb")
+            {
+                _player.AddScore(20);
+                Destroy(other.gameObject);
+                Instantiate(_bombExplosionPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+            }
 
+            if (other.tag == "Bomb_Explosion")
+            {
+                _player.AddScore(25);
+                EnemyDestroyed();
+            }
+        }
         void EnemyDestroyed()
         {
             _enemyCollider.enabled = false;
