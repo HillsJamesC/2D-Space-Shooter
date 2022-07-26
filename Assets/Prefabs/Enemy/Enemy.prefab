@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7618025961946940382}
-  - component: {fileID: 3716578685736271297}
   - component: {fileID: 6147080804681476569}
   - component: {fileID: 1489191014061036620}
   - component: {fileID: 8659185280264003467}
   - component: {fileID: 3915389464632144803}
   - component: {fileID: 5003697167337514751}
+  - component: {fileID: 3716578685736271297}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -36,21 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3716578685736271297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8172501941266996841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ee83ba4921e9394cbd240c9ee8e7641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 4
-  _laserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
-  _bombExplosionPrefab: {fileID: 6639658696185872379, guid: 030f7cf71635c3b47a6ef9c7f32edfa0, type: 3}
 --- !u!50 &6147080804681476569
 Rigidbody2D:
   serializedVersion: 4
@@ -264,3 +249,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3716578685736271297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172501941266996841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ee83ba4921e9394cbd240c9ee8e7641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 4
+  _laserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
+  _laserBeam: {fileID: 7885749506271455719, guid: efb53b69c9f788f4cbcc5f6f9b738503, type: 3}
+  _bombExplosionPrefab: {fileID: 6639658696185872379, guid: 030f7cf71635c3b47a6ef9c7f32edfa0, type: 3}

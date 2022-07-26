@@ -5,11 +5,8 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.0f;
-
-    // 0 = Triple Shot, 1 = Speed, 2 = Shields, 3 = Ammo, 4 = Health, 5 = Missles
-    [SerializeField] private int powerupID;
-
     [SerializeField] private AudioClip _clip;
+    [SerializeField] private int powerupID; // 0 = Triple Shot, 1 = Speed, 2 = Shields, 3 = Ammo, 4 = Health, 5 = Slow Speed
 
     // Update is called once per frame
     void Update()
@@ -51,6 +48,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 5:
                         player.SlowSpeedActive();
+                        break;
+                    case 6:
+                        player.BombsCollected();
                         break;
                     default:
                         Debug.Log("Default Value");

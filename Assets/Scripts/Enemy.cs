@@ -8,27 +8,31 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _anim;
     private Collider2D _enemyCollider;
+    //private Collider2D _laserBeamCollider;
     private AudioSource _audioSource;
     [SerializeField] private GameObject _laserPrefab;
+    //[SerializeField] private GameObject _laserBeam;
     private float _fireRate = 3.0f;
     private float _canFire = -1;
     [SerializeField] private GameObject _bombExplosionPrefab;
     private int _randomMovement; //0 = Down, 1 = Wave
     private SpawnManager _spawnManager;
-    
+
     void Start()
-    {   _player = GameObject.Find("Player").GetComponent<Player>();
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _enemyCollider = GetComponent<Collider2D>();
         _randomMovement = Random.Range(0, 2);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        //_laserBeamCollider = _laserBeam.transform.GetComponent<Collider2D>();
 
         if (_player == null)
         {
             Debug.LogError("The Player is NULL.");
         }
-        
+
         if (_anim == null)
         {
             Debug.LogError("The Animator is NULL.");
@@ -57,22 +61,38 @@ public class Enemy : MonoBehaviour
 
         if (Time.time > _canFire)
         {
+
             _fireRate = Random.Range(3f, 7f);
             _canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-
-            for (int i = 0; i < lasers.Length; i++)
+            if (transform.CompareTag("Enemy"))
             {
-                lasers[i].AssignEnemyLaser();
+                GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+                Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+                for (int i = 0; i < lasers.Length; i++)
+                {
+                    lasers[i].AssignEnemyLaser();
+                }
             }
+            //if (transform.CompareTag("Enemy2"))
+            //{
+            //    _laserBeam.SetActive(true);
+            //    StartCoroutine(DeactivateLaserBeam());
+            //}
         }
     }
+
+    //IEnumerator DeactivateLaserBeam()
+    //{
+    //    yield return new WaitForSeconds(1.5f);
+    //    _laserBeamCollider.enabled = false;
+    //    _laserBeam.SetActive(false);
+    //}
 
     void CalculateMovement()
     {
         // Using Switch statement to later add more movements
-        switch (_randomMovement) 
+        switch (_randomMovement)
         {
             case 1:
                 transform.Translate(new Vector3(Mathf.Cos(Time.time * 4) * 2, -1, 0) * _speed * Time.deltaTime);
@@ -83,7 +103,7 @@ public class Enemy : MonoBehaviour
                 transform.Translate(Vector3.down * _speed * Time.deltaTime);
                 break;
         }
-        
+
 
         if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
         {
@@ -128,6 +148,7 @@ public class Enemy : MonoBehaviour
         }
         void EnemyDestroyed()
         {
+            //_laserBeam.SetActive(false);
             _enemyCollider.enabled = false;
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();
