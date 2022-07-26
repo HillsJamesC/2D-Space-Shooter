@@ -75,8 +75,15 @@ public class Enemy : MonoBehaviour
             }
             if (transform.CompareTag("Enemy2"))
             {
-                _laserBeam.SetActive(true);
-                StartCoroutine(DeactivateLaserBeam());
+                if (_enemyCollider.enabled == false)
+                {
+                    _laserBeam.SetActive(false);
+                }
+                else
+                {
+                    _laserBeam.SetActive(true);
+                    StartCoroutine(DeactivateLaserBeam());
+                }
             }
         }
     }
@@ -103,11 +110,11 @@ public class Enemy : MonoBehaviour
         }
 
 
-        if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
-        {
-            Destroy(this.gameObject);
-        }
-        else if (transform.position.y < -4.92f)
+        //if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
+        //{
+        //    Destroy(this.gameObject);
+        //}
+        if (transform.position.y < -4.92f)
         {
             float randomX = Random.Range(-9f, 9f);
             transform.position = new Vector3(randomX, 7.12f, 0);
@@ -146,7 +153,6 @@ public class Enemy : MonoBehaviour
         }
         void EnemyDestroyed()
         {
-            //_laserBeam.SetActive(false);
             _enemyCollider.enabled = false;
             _anim.SetTrigger("OnEnemyDeath");
             _audioSource.Play();

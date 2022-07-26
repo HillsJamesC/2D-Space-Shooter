@@ -1740,8 +1740,6 @@ MonoBehaviour:
   - {fileID: 3169428514363768168, guid: ebb645481e2ff254abd85a5ad4bc3ad1, type: 3}
   - {fileID: 2497139922355538407, guid: 4b9239172783b14458a70ee8ba22e071, type: 3}
   - {fileID: 2422178749574654278, guid: b6491a725d8f7f6458776dc05d1e8efe, type: 3}
-  _rarePowerups:
-  - {fileID: 2422178749574654278, guid: b6491a725d8f7f6458776dc05d1e8efe, type: 3}
   _randomEnemyPrefab:
   - {fileID: 8172501941266996841, guid: 9191e59d83398e04c9683353cf62e897, type: 3}
   - {fileID: 5512680678033740690, guid: 9be09de3b1793a84c91db8cc14f5938f, type: 3}
@@ -1749,6 +1747,9 @@ MonoBehaviour:
   _enemiesSpawned: 0
   enemiesKilled: 0
   _stopSpawning: 0
+  enemyTable: 3300000031000000
+  enemyTotal: 0
+  randomEnemyNumber: 0
   powerupTable: 04010000be000000a000000091000000690000005f0000002d000000
   puTotal: 0
   randomPuNumber: 0
