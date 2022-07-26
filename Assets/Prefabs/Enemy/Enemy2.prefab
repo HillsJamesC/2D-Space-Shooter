@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 5637858596939480923}
   - component: {fileID: 1627140963979054381}
   - component: {fileID: 7595837594057135536}
-  - component: {fileID: 6847475989488482060}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Enemy2
@@ -298,18 +297,6 @@ MonoBehaviour:
   _laserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
   _laserBeam: {fileID: 6326493105557340819}
   _bombExplosionPrefab: {fileID: 6639658696185872379, guid: 030f7cf71635c3b47a6ef9c7f32edfa0, type: 3}
---- !u!114 &6847475989488482060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5512680678033740690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15be4e569b6666e4cbd4008f1dfdadb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1795093977134729791
 MonoBehaviour:
   m_ObjectHideFlags: 0

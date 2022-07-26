@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     //private Collider2D _laserBeamCollider;
     private AudioSource _audioSource;
     [SerializeField] private GameObject _laserPrefab;
-    //[SerializeField] private GameObject _laserBeam;
+    [SerializeField] private GameObject _laserBeam;
     private float _fireRate = 3.0f;
     private float _canFire = -1;
     [SerializeField] private GameObject _bombExplosionPrefab;
@@ -26,7 +26,6 @@ public class Enemy : MonoBehaviour
         _enemyCollider = GetComponent<Collider2D>();
         _randomMovement = Random.Range(0, 2);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        //_laserBeamCollider = _laserBeam.transform.GetComponent<Collider2D>();
 
         if (_player == null)
         {
@@ -74,20 +73,19 @@ public class Enemy : MonoBehaviour
                     lasers[i].AssignEnemyLaser();
                 }
             }
-            //if (transform.CompareTag("Enemy2"))
-            //{
-            //    _laserBeam.SetActive(true);
-            //    StartCoroutine(DeactivateLaserBeam());
-            //}
+            if (transform.CompareTag("Enemy2"))
+            {
+                _laserBeam.SetActive(true);
+                StartCoroutine(DeactivateLaserBeam());
+            }
         }
     }
 
-    //IEnumerator DeactivateLaserBeam()
-    //{
-    //    yield return new WaitForSeconds(1.5f);
-    //    _laserBeamCollider.enabled = false;
-    //    _laserBeam.SetActive(false);
-    //}
+    IEnumerator DeactivateLaserBeam()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _laserBeam.SetActive(false);
+    }
 
     void CalculateMovement()
     {
