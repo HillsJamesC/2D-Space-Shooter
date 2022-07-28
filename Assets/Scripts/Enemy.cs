@@ -5,21 +5,24 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 4.0f;
+    [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private GameObject _laserBeam;
+    [SerializeField] private GameObject _bombExplosionPrefab;
+    [SerializeField] private GameObject _enemyShieldVisualizer;
     private Player _player;
     private Animator _anim;
     private Collider2D _enemyCollider;
-    //private Collider2D _laserBeamCollider;
     private AudioSource _audioSource;
-    [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private GameObject _laserBeam;
+    private SpawnManager _spawnManager;
     private float _fireRate = 3.0f;
     private float _canFire = -1;
-    [SerializeField] private GameObject _bombExplosionPrefab;
     private int _randomMovement; //0 = Down, 1 = Wave
-    private SpawnManager _spawnManager;
+    private bool _isEnemyShieldActive;
+    private int _randomEnemyShield;
 
     void Start()
     {
+        EnemyShields();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -75,17 +78,26 @@ public class Enemy : MonoBehaviour
             }
             if (transform.CompareTag("Enemy2"))
             {
-                if (_enemyCollider.enabled == false)
-                {
-                    _laserBeam.SetActive(false);
-                }
-                else
-                {
-                    _laserBeam.SetActive(true);
-                    StartCoroutine(DeactivateLaserBeam());
-                }
+                _laserBeam.SetActive(true);
+                StartCoroutine(DeactivateLaserBeam());
             }
         }
+    }
+
+    private void EnemyShields()
+    {
+        _randomEnemyShield = Random.Range(0, 5);
+
+        if (_randomEnemyShield > 3)
+        {
+            _isEnemyShieldActive = false;
+        }
+        else
+        {
+            _isEnemyShieldActive = true;
+            _enemyShieldVisualizer.SetActive(true);
+        }
+
     }
 
     IEnumerator DeactivateLaserBeam()
@@ -100,20 +112,20 @@ public class Enemy : MonoBehaviour
         switch (_randomMovement)
         {
             case 1:
-                transform.Translate(new Vector3(Mathf.Cos(Time.time * 4) * 2, -1, 0) * _speed * Time.deltaTime);
+                transform.Translate(_speed * Time.deltaTime * new Vector3(Mathf.Cos(Time.time * 4) * 2, -1, 0));
                 break;
             //case 2:
             //case 3:
             default:
-                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                transform.Translate(_speed * Time.deltaTime * Vector3.down);
                 break;
         }
 
 
-        //if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
-        //{
-        //    Destroy(this.gameObject);
-        //}
+        if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
+        {
+            Destroy(this.gameObject);
+        }
         if (transform.position.y < -4.92f)
         {
             float randomX = Random.Range(-9f, 9f);
@@ -153,11 +165,19 @@ public class Enemy : MonoBehaviour
         }
         void EnemyDestroyed()
         {
-            _enemyCollider.enabled = false;
-            _anim.SetTrigger("OnEnemyDeath");
-            _audioSource.Play();
-            _spawnManager.enemiesKilled++;
-            Destroy(this.gameObject, 2.8f);
+            if (_isEnemyShieldActive == true)
+            {
+                _isEnemyShieldActive = false;
+                _enemyShieldVisualizer.SetActive(false);
+            }
+            else
+            {
+                _enemyCollider.enabled = false;
+                _anim.SetTrigger("OnEnemyDeath");
+                _audioSource.Play();
+                _spawnManager.enemiesKilled++;
+                Destroy(this.gameObject, 2.8f);
+            }
         }
     }
 }

@@ -137,7 +137,7 @@ public class SpawnManager : MonoBehaviour
                 }
                 else randomEnemyNumber -= enemyTable[i];
             }
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(2.6f);
         }
     }
 
@@ -186,6 +186,7 @@ public class SpawnManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
+        StopAllCoroutines();
         _stopSpawning = true;
     }
 }
