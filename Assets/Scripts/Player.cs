@@ -70,12 +70,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && (_thrusterLevel < 50f))
             {
-                transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
+                transform.Translate((_speed * _speedMultiplier) * Time.deltaTime * direction);
                 ThrusterCounter();
             }
             else
             {
-                transform.Translate(direction * _speed * Time.deltaTime);
+                transform.Translate(_speed * Time.deltaTime * direction);
                 if (!Input.GetKey(KeyCode.LeftShift))
                     ThrusterRefill();
             }
@@ -84,10 +84,10 @@ public class Player : MonoBehaviour
 
     void ThrusterCounter()
     {
-        if (_thrusterLevel > 0f && _thrusterLevel < 50f)
+        if (_thrusterLevel >= 0f && _thrusterLevel < 50f)
         {
             _uiManager.UpdateThrusterLevel(_thrusterLevel);
-            _thrusterLevel += .025f;
+            _thrusterLevel += .005f;
         }
     }
 
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
         if (_thrusterLevel > 1f)
         {
             _uiManager.UpdateThrusterLevel(_thrusterLevel);
-            _thrusterLevel -= .006f;
+            _thrusterLevel -= .001f;
         }
     }
 
@@ -222,6 +222,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _speed = 5.0f;
+        _thrusterLevel = 49;
     }
 
     public void ShieldsActive()

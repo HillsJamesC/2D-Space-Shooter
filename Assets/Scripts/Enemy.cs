@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _speed = 4.0f;
+    [SerializeField] private float _speed = 3.2f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserBeam;
     [SerializeField] private GameObject _bombExplosionPrefab;
     [SerializeField] private GameObject _enemyShieldVisualizer;
+    private float _enemyRamDistance = 3.2f;
+    private float _enemyRamSpeed = 2f;
+    private SpriteRenderer _spriteRenderer;
     private Player _player;
     private Animator _anim;
     private Collider2D _enemyCollider;
@@ -29,6 +32,7 @@ public class Enemy : MonoBehaviour
         _enemyCollider = GetComponent<Collider2D>();
         _randomMovement = Random.Range(0, 2);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (_player == null)
         {
@@ -59,6 +63,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_player == null)
+        {
+            Destroy(this.gameObject);
+        }
+
         CalculateMovement();
 
         if (Time.time > _canFire)
@@ -88,7 +97,7 @@ public class Enemy : MonoBehaviour
     {
         _randomEnemyShield = Random.Range(0, 5);
 
-        if (_randomEnemyShield > 3)
+        if (_randomEnemyShield > 4)
         {
             _isEnemyShieldActive = false;
         }
@@ -102,7 +111,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator DeactivateLaserBeam()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         _laserBeam.SetActive(false);
     }
 
@@ -121,6 +130,22 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
+        if (_player != null)
+        {
+            if (Vector3.Distance(transform.position, _player.transform.position) <= _enemyRamDistance)
+            {
+                if (transform.position.y > _player.transform.position.y)
+                {
+                    StartCoroutine(EnemyAggressionColor());
+                    transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _enemyRamSpeed * Time.deltaTime);
+                }
+            }
+            else
+            {
+                StopCoroutine(EnemyAggressionColor());
+                _spriteRenderer.color = Color.white;
+            }
+        }
 
         if (_enemyCollider.enabled == false && transform.position.y < -4.92f)
         {
@@ -132,6 +157,16 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, 7.12f, 0);
         }
     }
+
+    IEnumerator EnemyAggressionColor()
+    {
+        _spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(.5f);
+        _spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(.5f);
+    }
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

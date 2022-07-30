@@ -17,8 +17,8 @@ public class SpawnManager : MonoBehaviour
     public bool _stopSpawning = false;
     public int[] enemyTable =
     {
-        550,    // Double Laser Enemy
-        450     // Laserbeam Enemy
+        700,    // Double Laser Enemy
+        300     // Laserbeam Enemy
     };
     public int enemyTotal;
     public int randomEnemyNumber;
@@ -26,13 +26,13 @@ public class SpawnManager : MonoBehaviour
 
     public int[] powerupTable =
     {
-        260,    // Ammo 
-        190,    // Speed Boost
-        160,    // Shields
-        145,    // Health
-        105,    // Triple Shot
-        95,     // Speed Reduction
-        45      // Bombs
+        400,    // Ammo 
+        225,    // Speed Boost
+        150,    // Health
+        100,    // Shields
+        75,     // Triple Shot
+        30,     // Speed Reduction
+        20      // Bombs
 
     };
     public int puTotal;
@@ -137,7 +137,7 @@ public class SpawnManager : MonoBehaviour
                 }
                 else randomEnemyNumber -= enemyTable[i];
             }
-            yield return new WaitForSeconds(2.6f);
+            yield return new WaitForSeconds(4.0f);
         }
     }
 
@@ -187,6 +187,6 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         StopAllCoroutines();
-        _stopSpawning = true;
+        
     }
 }

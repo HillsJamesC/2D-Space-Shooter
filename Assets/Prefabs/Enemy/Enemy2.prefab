@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee83ba4921e9394cbd240c9ee8e7641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
+  _speed: 2.8
   _laserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
   _laserBeam: {fileID: 6326493105557340819}
   _bombExplosionPrefab: {fileID: 6639658696185872379, guid: 030f7cf71635c3b47a6ef9c7f32edfa0, type: 3}
