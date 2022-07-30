@@ -9,8 +9,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserBeam;
     [SerializeField] private GameObject _bombExplosionPrefab;
     [SerializeField] private GameObject _enemyShieldVisualizer;
-    private float _enemyRamDistance = 3.2f;
-    private float _enemyRamSpeed = 2f;
+    [SerializeField] private float _enemyRamDistance = 3.2f;
+    [SerializeField] private float _enemyRamSpeed = 2f;
     private SpriteRenderer _spriteRenderer;
     private Player _player;
     private Animator _anim;
