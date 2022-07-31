@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyShieldVisualizer;
     [SerializeField] private float _enemyRamDistance = 3.2f;
     [SerializeField] private float _enemyRamSpeed = 2f;
+    [SerializeField] private GameObject _enemyBackShot;
+    [SerializeField] private float _enemyBackShotDistance = 6f;
     private SpriteRenderer _spriteRenderer;
     private Player _player;
     private Animator _anim;
@@ -73,7 +75,7 @@ public class Enemy : MonoBehaviour
         if (Time.time > _canFire)
         {
 
-            _fireRate = Random.Range(3f, 7f);
+            _fireRate = Random.Range(2f, 5f);
             _canFire = Time.time + _fireRate;
             if (transform.CompareTag("Enemy"))
             {
@@ -83,6 +85,15 @@ public class Enemy : MonoBehaviour
                 for (int i = 0; i < lasers.Length; i++)
                 {
                     lasers[i].AssignEnemyLaser();
+                }
+                if (Vector3.Distance(transform.position, _player.transform.position) <= _enemyBackShotDistance)
+                {
+                    if (transform.position.y < _player.transform.position.y)
+                    {
+                        GameObject enemyBackShot = Instantiate(_enemyBackShot, transform.position, Quaternion.identity);
+                        Laser backShot = enemyBackShot.GetComponent<Laser>();
+                        backShot.AssignEnemyBackShot();
+                    }
                 }
             }
             if (transform.CompareTag("Enemy2"))
