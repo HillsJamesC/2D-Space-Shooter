@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6858150660210609471}
   m_Layer: 0
   m_Name: Slow_Powerup
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  powerupID: 5
   _clip: {fileID: 8300000, guid: 4badd84655f111940ab28e3b5f6ab1a9, type: 3}
+  powerupID: 5
 --- !u!95 &6858150660210609471
 Animator:
   serializedVersion: 3

@@ -21,7 +21,7 @@ public class Powerup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             Player player = other.transform.GetComponent<Player>();            
 
@@ -58,6 +58,11 @@ public class Powerup : MonoBehaviour
                 }
             }
             Destroy(this.gameObject);
-        }        
+        }
+        if (other.CompareTag("EnemyLaser") && this.gameObject.name != "Slow_Powerup")
+        {
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }

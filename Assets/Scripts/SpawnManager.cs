@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
 
         if (_uiManager == null)
         {
-            Debug.LogError("The UI Manager is NULL.");
+            Debug.LogError("The UI Manager is NULL");
         }
 
         foreach (var item in powerupTable)
