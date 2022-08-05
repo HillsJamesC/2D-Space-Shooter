@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private bool _isTripleShotActive = false;
     private bool _isBombsActive = false;
+    public bool _isPowerupMagnetActive = false;
     private float _speedMultiplier = 2.25f;
     private float _canFire = -1f;
     private float _thrusterLevel = 1f;
@@ -69,17 +70,28 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         if (Input.GetKey(KeyCode.LeftShift) && (_thrusterLevel < 50f))
+        {
+            transform.Translate((_speed * _speedMultiplier) * Time.deltaTime * direction);
+            ThrusterCounter();
+        }
+        else
+        {
+            transform.Translate(_speed * Time.deltaTime * direction);
+            if (!Input.GetKey(KeyCode.LeftShift))
             {
-                transform.Translate((_speed * _speedMultiplier) * Time.deltaTime * direction);
-                ThrusterCounter();
+                ThrusterRefill();
             }
-            else
-            {
-                transform.Translate(_speed * Time.deltaTime * direction);
-                if (!Input.GetKey(KeyCode.LeftShift))
-                    ThrusterRefill();
-            }
+        }
+
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
+        if (Input.GetKey(KeyCode.C))
+        {
+            _isPowerupMagnetActive = true;
+        }
+        else
+        {
+            _isPowerupMagnetActive = false;
+        }
     }
 
     void ThrusterCounter()

@@ -7,11 +7,22 @@ public class Powerup : MonoBehaviour
     [SerializeField] private float _speed = 3.0f;
     [SerializeField] private AudioClip _clip;
     [SerializeField] private int powerupID; // 0 = Triple Shot, 1 = Speed, 2 = Shields, 3 = Ammo, 4 = Health, 5 = Slow Speed
+    private float _powerupMagnetSpeed = 6.5f;
+    private Player _player;
+
+    private void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent <Player>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(_speed * Time.deltaTime * Vector3.down);
+        if (_player._isPowerupMagnetActive == true)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _powerupMagnetSpeed * Time.deltaTime);
+        }
 
         if (transform.position.y < -4.92f)
         {
