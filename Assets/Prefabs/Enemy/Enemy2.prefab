@@ -295,10 +295,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2.8
-  _laserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
+  _enemyLaserPrefab: {fileID: 33312088457114683, guid: 276f13e0da82776469d6bf1729e3c7b5, type: 3}
+  _laserPrefab: {fileID: 5617749119487610873, guid: f5a0e5cbfe1cea44ea36b0592dce2cc7, type: 3}
   _laserBeam: {fileID: 6326493105557340819}
   _bombExplosionPrefab: {fileID: 6639658696185872379, guid: 030f7cf71635c3b47a6ef9c7f32edfa0, type: 3}
   _enemyShieldVisualizer: {fileID: 5679165512268445923}
+  _enemyBackShot: {fileID: 2243225727035157259, guid: 26a3fd819f3614d498611b6dff9dc698, type: 3}
+  _isEnemyShieldActive: 0
+  _enemyRamDistance: 3.2
+  _enemyRamSpeed: 2
+  _enemyBackShotDistance: 4.2
+  _laserCastDistance: 8
+  _laserCastRadius: 1
+  _avoidCount: 2
 --- !u!1 &5679165512268445923
 GameObject:
   m_ObjectHideFlags: 0

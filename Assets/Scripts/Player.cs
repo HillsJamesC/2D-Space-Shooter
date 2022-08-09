@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _ammoEmptyClip;
     [SerializeField] private AudioClip _bombBeepClip;
-    [SerializeField] public CameraShake cameraShake;
+    public CameraShake cameraShake;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private AudioSource _audioSource;
@@ -242,6 +242,12 @@ public class Player : MonoBehaviour
         _shieldStrength = 3;
         _uiManager.UpdateShieldStrength(_shieldStrength);
         _shieldVisualizer.SetActive(true);
+    }
+
+    public void RegainAstroidAmmo()
+    {
+        _ammoCount += 1;
+        _uiManager.UpdateAmmo(_ammoCount);
     }
 
     public void AmmoCollected()

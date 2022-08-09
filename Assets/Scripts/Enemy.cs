@@ -5,14 +5,19 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.2f;
+    [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserBeam;
     [SerializeField] private GameObject _bombExplosionPrefab;
     [SerializeField] private GameObject _enemyShieldVisualizer;
+    [SerializeField] private GameObject _enemyBackShot;
+    [SerializeField] private bool _isEnemyShieldActive;
     [SerializeField] private float _enemyRamDistance = 3.2f;
     [SerializeField] private float _enemyRamSpeed = 2f;
-    [SerializeField] private GameObject _enemyBackShot;
     [SerializeField] private float _enemyBackShotDistance = 4.2f;
+    [SerializeField] private float _laserCastDistance = 8f;
+    [SerializeField] private float _laserCastRadius = 1f;
+    [SerializeField] private float _avoidCount = 2f;
     private SpriteRenderer _spriteRenderer;
     private Player _player;
     private Animator _anim;
@@ -22,12 +27,12 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3.0f;
     private float _canFire = -1;
     private int _randomMovement; //0 = Down, 1 = Wave
-    private bool _isEnemyShieldActive;
     private int _randomEnemyShield;
 
     void Start()
     {
         EnemyShields();
+        //_laserPrefab = GameObject.Find("Laser").GetComponent<Laser>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -70,8 +75,13 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        CalculateMovement();
-        CanFire();
+        if (_player != null)
+        {
+            CalculateMovement();
+            CanFire();
+        }
+
+
     }
 
     private void CanFire()
@@ -84,7 +94,7 @@ public class Enemy : MonoBehaviour
 
             if (transform.CompareTag("Enemy"))
             {
-                GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+                GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
                 Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
                 for (int i = 0; i < lasers.Length; i++)
@@ -149,6 +159,29 @@ public class Enemy : MonoBehaviour
 
         if (_player != null)
         {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, _laserCastRadius, Vector2.down, _laserCastDistance, LayerMask.GetMask("Laser"));
+
+            if (hit.collider != null && this.CompareTag("Enemy2"))
+            {
+                if (hit.collider.CompareTag("Laser") && _avoidCount > 0f)
+                {
+                    if (transform.position.x <= hit.transform.position.x)
+                    {
+                        transform.position = new Vector2(transform.position.x - 1f, transform.position.y);
+                    }
+                    else
+                    {
+                        transform.position = new Vector2(transform.position.x + 1f, transform.position.y);
+                    }
+
+                    _avoidCount -= 1f;
+                }
+                else if (_avoidCount <= 0f)
+                {
+                    return;
+                }
+            }
+
             if (Vector3.Distance(transform.position, _player.transform.position) <= _enemyRamDistance)
             {
                 if (transform.position.y > _player.transform.position.y)
@@ -189,27 +222,27 @@ public class Enemy : MonoBehaviour
     {
         if (_player != null)
         {
-            if (other.tag == "Player")
+            if (other.CompareTag("Player"))
             {
                 _player.Damage();
                 EnemyDestroyed();
             }
 
-            if (other.tag == "Laser")
+            if (other.CompareTag("Laser"))
             {
                 Destroy(other.gameObject);
                 _player.AddScore(10);
                 EnemyDestroyed();
             }
 
-            if (other.tag == "Bomb")
+            if (other.CompareTag("Bomb"))
             {
                 _player.AddScore(20);
                 Destroy(other.gameObject);
                 Instantiate(_bombExplosionPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
             }
 
-            if (other.tag == "Bomb_Explosion")
+            if (other.CompareTag("Bomb_Explosion"))
             {
                 _player.AddScore(25);
                 EnemyDestroyed();
@@ -224,6 +257,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
+                _canFire = 1;
                 _enemyCollider.enabled = false;
                 _anim.SetTrigger("OnEnemyDeath");
                 _audioSource.Play();

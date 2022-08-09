@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite[] _thrusterSprites;
     [SerializeField] private Image _thrusterImg;
     [SerializeField] private Text _ammoText;
-    [SerializeField] public Text _announceWave;
+    public Text _announceWave;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
