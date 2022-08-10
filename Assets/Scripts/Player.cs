@@ -19,13 +19,16 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _ammoEmptyClip;
     [SerializeField] private AudioClip _bombBeepClip;
+    [SerializeField] private AudioClip _missleSoundClip;
+    [SerializeField] private GameObject _homingMissle;
     public CameraShake cameraShake;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     private AudioSource _audioSource;
     private bool _isTripleShotActive = false;
     private bool _isBombsActive = false;
-    public bool _isPowerupMagnetActive = false;
+    private bool _isHomingMisslesActive = false;
+    public bool isPowerupMagnetActive = false;
     private float _speedMultiplier = 2.25f;
     private float _canFire = -1f;
     private float _thrusterLevel = 1f;
@@ -59,7 +62,7 @@ public class Player : MonoBehaviour
         CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            FireLaser();
+            FireWeapon();
         }
     }
     void CalculateMovement()
@@ -86,11 +89,11 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
         if (Input.GetKey(KeyCode.C))
         {
-            _isPowerupMagnetActive = true;
+            isPowerupMagnetActive = true;
         }
         else
         {
-            _isPowerupMagnetActive = false;
+            isPowerupMagnetActive = false;
         }
     }
 
@@ -112,7 +115,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void FireLaser()
+    void FireWeapon()
     {
         _canFire = Time.time + _fireRate;
         if (_ammoCount < 1)
@@ -125,6 +128,11 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _bombBeepClip;
             _audioSource.Play();
+        }
+
+        else if (_ammoCount > 0 && _isHomingMisslesActive == true)
+        {
+            _audioSource.clip = _missleSoundClip;
         }
         else
         {
@@ -139,6 +147,10 @@ public class Player : MonoBehaviour
         else if (_isBombsActive == true)
         {
             Instantiate(_bombPrefab, transform.position + new Vector3(0, 0.87f, 0), Quaternion.identity);
+        }
+        else if (_isHomingMisslesActive == true)
+        {
+            Instantiate(_homingMissle, transform.position + new Vector3(0, -0.19f, 0), Quaternion.identity);
         }
         else
         {
@@ -264,6 +276,7 @@ public class Player : MonoBehaviour
     public void BombsCollected()
     {
         _isTripleShotActive = false;
+        _isHomingMisslesActive = false;
         _isBombsActive = true;
         StartCoroutine(BombPowerDown());
     }
@@ -272,6 +285,20 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isBombsActive = false;
+    }
+
+    public void HomingMisslesCollected()
+    {
+        _isTripleShotActive = false;
+        _isBombsActive = false;
+        _isHomingMisslesActive = true;
+        StartCoroutine(HomingMisslesPowerDown());
+    }
+
+    IEnumerator HomingMisslesPowerDown()
+    {
+        yield return new WaitForSeconds(8.0f);
+        _isHomingMisslesActive = false;
     }
 
     public void AddScore(int points)

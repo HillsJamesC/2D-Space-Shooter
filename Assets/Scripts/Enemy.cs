@@ -122,9 +122,9 @@ public class Enemy : MonoBehaviour
 
     private void EnemyShields()
     {
-        _randomEnemyShield = Random.Range(0, 5);
+        _randomEnemyShield = Random.Range(0, 6);
 
-        if (_randomEnemyShield > 4)
+        if (_randomEnemyShield < 4)
         {
             _isEnemyShieldActive = false;
         }
@@ -245,6 +245,12 @@ public class Enemy : MonoBehaviour
             if (other.CompareTag("Bomb_Explosion"))
             {
                 _player.AddScore(25);
+                EnemyDestroyed();
+            }
+            if (other.CompareTag("HomingMissle"))
+            {
+                Destroy(other.gameObject);
+                _player.AddScore(75);
                 EnemyDestroyed();
             }
         }

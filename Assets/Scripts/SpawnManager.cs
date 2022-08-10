@@ -28,11 +28,12 @@ public class SpawnManager : MonoBehaviour
     {
         400,    // Ammo 
         225,    // Speed Boost
-        150,    // Health
-        100,    // Shields
-        75,     // Triple Shot
-        30,     // Speed Reduction
-        20      // Bombs
+        175,    // Health
+        140,    // Shields
+        105,    // Triple Shot
+        75,     // Speed Reduction
+        55,     // Bombs
+        45      // Homing Missles
 
     };
     public int puTotal;

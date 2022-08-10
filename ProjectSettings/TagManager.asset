@@ -12,6 +12,7 @@ TagManager:
   - LaserBeam
   - Powerup
   - EnemyLaser
+  - HomingMissle
   layers:
   - Default
   - TransparentFX
