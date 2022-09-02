@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _thrusterImg;
     [SerializeField] private Text _ammoText;
     public Text _announceWave;
+    public Text _announceBoss;
     private GameManager _gameManager;
 
     // Start is called before the first frame update
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _announceWave.gameObject.SetActive(false);
+        _announceBoss.gameObject.SetActive(false);
 
         if (_gameManager == null)
         {
@@ -33,9 +35,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateWave(int nextwave)
+    public void UpdateBoss(int nextBoss)
     {
-        _announceWave.text = "Wave: " + nextwave.ToString();
+        _announceBoss.text = "BOSS: " + nextBoss.ToString();
+    }
+
+    public void UpdateWave(int nextWave)
+    {
+        _announceWave.text = "Wave: " + nextWave.ToString();
     }
 
     public void UpdateAmmo(int playerAmmo)
@@ -79,7 +86,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void GameOverSequence()
+    public void GameOverSequence()
     {
         _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);

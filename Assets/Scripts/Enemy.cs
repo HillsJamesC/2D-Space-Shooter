@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.2f;
     [SerializeField] private GameObject _enemyLaserPrefab;
-    [SerializeField] private GameObject _laserPrefab;
+    //[SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _laserBeam;
     [SerializeField] private GameObject _bombExplosionPrefab;
     [SerializeField] private GameObject _enemyShieldVisualizer;
@@ -25,14 +25,13 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
     private SpawnManager _spawnManager;
     private float _fireRate = 3.0f;
-    private float _canFire = -1;
+    private float _canFire = -1.0f;
     private int _randomMovement; //0 = Down, 1 = Wave
     private int _randomEnemyShield;
 
     void Start()
     {
         EnemyShields();
-        //_laserPrefab = GameObject.Find("Laser").GetComponent<Laser>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -88,7 +87,6 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time > _canFire)
         {
-
             _fireRate = Random.Range(2f, 5f);
             _canFire = Time.time + _fireRate;
 

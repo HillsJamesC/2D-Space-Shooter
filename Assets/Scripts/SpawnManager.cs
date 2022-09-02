@@ -7,12 +7,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerups;
     [SerializeField] private GameObject[] _randomEnemyPrefab;
-    [SerializeField] private int _enemiesToSpawn = 16;
+    [SerializeField] private int _enemiesToSpawn = 5;
     [SerializeField] private int _enemiesSpawned = 0;
+    [SerializeField] private GameObject _bossPrefab;
     public int enemiesKilled;
     private UIManager _uiManager;
     private bool _isWaveAnnouncing = true;
-    private int _nextWave = 1;
+    public int _nextWave = 1;
+    private bool _isBossAnnouncing = true;
+    private int _nextBoss = 1;
     private Player _player;
     public bool _stopSpawning = false;
     public int[] enemyTable =
@@ -94,17 +97,40 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
-        if (_isWaveAnnouncing != false && _player != null)
+        if (_player != null)
         {
-            StartCoroutine(AnnounceWave());
+            if (_nextWave < 4)
+            {
+                if (_isWaveAnnouncing != false)
+                {
+                    StartCoroutine(AnnounceWave());
+                }
+                else
+                {
+                    _stopSpawning = false;
+                    StartCoroutine(SpawnEnemyRoutine());
+                    StartCoroutine(SpawnPowerupRoutine());
+                }
+            }
+            if (_nextWave >= 4)
+            {
+                _stopSpawning = true;
+                _isBossAnnouncing = true;
+                StartCoroutine(AnnounceBoss());
+            }
         }
-        else
-        {
-            _stopSpawning = false;
-            StartCoroutine(SpawnEnemyRoutine());
-            StartCoroutine(SpawnPowerupRoutine());
-        }
+    }
 
+    IEnumerator AnnounceBoss()
+    {
+        _uiManager.UpdateBoss(_nextBoss);
+        yield return new WaitForSeconds(1.0f);
+        _uiManager._announceBoss.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3.0f);
+        _uiManager._announceBoss.gameObject.SetActive(false);
+        _isBossAnnouncing = false;
+        StartCoroutine(SpawnBossRoutine());
+        StartCoroutine(SpawnPowerupRoutine());
     }
 
     IEnumerator AnnounceWave()
@@ -118,6 +144,15 @@ public class SpawnManager : MonoBehaviour
         StartSpawning();
     }
 
+    IEnumerator SpawnBossRoutine()
+    {
+        yield return new WaitForSeconds(2.4f);
+        Vector3 posToSpawn = new Vector3(0, 7.12f, 0);
+        GameObject newBoss = Instantiate(_bossPrefab, posToSpawn, Quaternion.identity);
+        newBoss.transform.parent = _enemyContainer.transform;
+
+    }
+    
     IEnumerator SpawnEnemyRoutine()
     {
         while (_stopSpawning == false && _enemiesSpawned < _enemiesToSpawn)
@@ -136,7 +171,10 @@ public class SpawnManager : MonoBehaviour
                     _enemySpawnRestart = true;
                     yield break;
                 }
-                else randomEnemyNumber -= enemyTable[i];
+                else
+                {
+                    randomEnemyNumber -= enemyTable[i];
+                }
             }
             yield return new WaitForSeconds(4.0f);
         }
@@ -153,9 +191,9 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
-        while (_stopSpawning == false)
+        while (_stopSpawning == false || (_nextWave >= 4 && _bossPrefab != null))
         {
-            yield return new WaitForSeconds(10.0f);
+            yield return new WaitForSeconds(7.0f);
             randomPuNumber = Random.Range(0, puTotal);
 
             for (int i = 0; i < powerupTable.Length; i++)
@@ -176,7 +214,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private void RestartSpawnPowerupRoutine()
+    public void RestartSpawnPowerupRoutine()
     {
         if (_powerupSpawnRestart == true)
         {
@@ -187,7 +225,6 @@ public class SpawnManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        StopAllCoroutines();
-        
+        StopAllCoroutines();        
     }
 }

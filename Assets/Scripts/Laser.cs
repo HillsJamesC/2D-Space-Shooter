@@ -5,13 +5,13 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     [SerializeField] private float _speed = 8.0f;
-    private bool _isEnemyLaser = false;
+    public bool isEnemyLaser = false;
     private bool _isEnemyBackShot = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (_isEnemyLaser == false || _isEnemyBackShot == true)
+        if (isEnemyLaser == false || _isEnemyBackShot == true)
         {
             MoveUp();
         }
@@ -23,7 +23,7 @@ public class Laser : MonoBehaviour
 
     void MoveUp()
     {
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        transform.Translate(_speed * Time.deltaTime * Vector3.up);
 
         if (transform.position.y > 6.93f)
         {
@@ -37,7 +37,7 @@ public class Laser : MonoBehaviour
 
     void MoveDown()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(_speed * Time.deltaTime * Vector3.down);
 
         if (transform.position.y < -3.68f)
         {
@@ -50,7 +50,7 @@ public class Laser : MonoBehaviour
     }
     public void AssignEnemyLaser()
     {
-        _isEnemyLaser = true;
+        isEnemyLaser = true;
     }
 
     public void AssignEnemyBackShot()
@@ -60,11 +60,10 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && (_isEnemyLaser == true || _isEnemyBackShot == true))
+        if (other.CompareTag("Player") && (isEnemyLaser == true || _isEnemyBackShot == true))
         {
-            Player player = other.GetComponent<Player>();
-
-            if (player != null)
+            
+            if (other.TryGetComponent<Player>(out var player))
             {
                 player.Damage();
             }

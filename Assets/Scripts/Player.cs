@@ -85,8 +85,15 @@ public class Player : MonoBehaviour
                 ThrusterRefill();
             }
         }
+        if (_spawnManager._nextWave >= 4)
+        {
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, -1.7f), 0);
+        }
+        else
+        {
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
+        }
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -9.5f, 9.5f), Mathf.Clamp(transform.position.y, -3.15f, 2f), 0);
         if (Input.GetKey(KeyCode.C))
         {
             isPowerupMagnetActive = true;
